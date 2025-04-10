@@ -3,7 +3,7 @@ BOT_NAME = "news_scraper"
 SPIDER_MODULES = ["news_scraper.spiders"]
 NEWSPIDER_MODULE = "news_scraper.spiders"
 
-USER_AGENT = 'news_scraper_bot (+https://github.com/tuusuario/news_scraper)'
+USER_AGENT = "news_scraper_etl (+https://github.com/Yam3012/news_scraper_etl)"
 ROBOTSTXT_OBEY = True
 
 DOWNLOAD_DELAY = 2

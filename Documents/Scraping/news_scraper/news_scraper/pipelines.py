@@ -1,20 +1,35 @@
 import json
+import os
 import psycopg2
 from itemadapter import ItemAdapter
 
 class NewsScraperPipeline:
-    def open_spider(self, spider):
-        # Conexión a PostgreSQL
-        self.conn = psycopg2.connect(
-            dbname='scraping_db',
-            user='postgres',
-            password='Root123$$',
-            host='localhost',
-            port='5432'
-        )
-        self.cursor = self.conn.cursor()
+    def __init__(self):
+        try:
+            self.conn = psycopg2.connect(
+                dbname='scraping_db',
+                user='postgres',
+                password='Root123$$',
+                host='localhost',
+                port='5432'
+            )
+            self.cursor = self.conn.cursor()
+            self.cursor.execute("""
+                CREATE TABLE IF NOT EXISTS articles (
+                    id SERIAL PRIMARY KEY,
+                    title TEXT,
+                    url TEXT UNIQUE,
+                    date TEXT,
+                    source TEXT,
+                    summary TEXT
+                );
+            """)
+            self.conn.commit()
+        except Exception as e:
+            print(f"❌ Error en __init__: {e}")
 
-        # Archivo JSONL para acumulación
+    def open_spider(self, spider):
+        os.makedirs("output", exist_ok=True)
         self.json_file = open('output/articles_final.jsonl', 'a', encoding='utf-8')
 
     def close_spider(self, spider):
@@ -47,7 +62,7 @@ class NewsScraperPipeline:
         except Exception as e:
             spider.logger.error(f"❌ Error al insertar en PostgreSQL: {e}")
 
-        # Guardar en JSONL (solo si no está duplicado)
+        # Guardar en JSONL si no está duplicado
         try:
             if not self._url_exists_in_jsonl(url):
                 json.dump({
@@ -61,6 +76,8 @@ class NewsScraperPipeline:
         except Exception as e:
             spider.logger.error(f"❌ Error al escribir en JSONL: {e}")
 
+        # ✅ Confirmación visible en consola
+        print(f"✅ Guardado: {title}")
         return item
 
     def _url_exists_in_jsonl(self, url):
@@ -77,6 +94,7 @@ class NewsScraperPipeline:
         except FileNotFoundError:
             return False
         return False
+
 
 
 

@@ -1,4 +1,3 @@
-# output/exportar_resumen.py
 
 import psycopg2
 import csv

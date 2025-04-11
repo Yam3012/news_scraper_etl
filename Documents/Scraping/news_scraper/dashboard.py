@@ -7,7 +7,7 @@ from datetime import date
 # CONFIGURACIÓN INICIAL
 st.set_page_config(page_title="📰 Dashboard de Noticias", layout="wide")
 
-API_KEY = "067795edcbb0238a38685c19948cf81d"  # Reemplaza con tu clave real
+API_KEY = "067795edcbb0238a38685c19948cf81d" 
 
 # 🔌 Conexión a PostgreSQL
 @st.cache_data

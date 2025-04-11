@@ -15,12 +15,7 @@ AUTOTHROTTLE_TARGET_CONCURRENCY = 1.0
 AUTOTHROTTLE_DEBUG = False
 
 FEEDS = {
-    'output/articles.json': {
-        'format': 'json',
-        'overwrite': False,
-        'encoding': 'utf8',
-        'indent': 2,
-    }
+
 }
 
 ITEM_PIPELINES = {

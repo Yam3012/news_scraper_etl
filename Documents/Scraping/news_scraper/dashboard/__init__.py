@@ -1,0 +1,1 @@
+# Este archivo hace que 'dashboard' sea un módulo de Python

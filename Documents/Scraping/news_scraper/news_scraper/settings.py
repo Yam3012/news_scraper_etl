@@ -19,8 +19,11 @@ FEEDS = {
 }
 
 ITEM_PIPELINES = {
-    "news_scraper.pipelines.NewsScraperPipeline": 300,
+    'news_scraper.pipelines.landing_news_pipeline.LandingPipeline': 100,
+    'news_scraper.pipelines.refined_news_pipeline.RefinedPipeline': 200,
+    'news_scraper.pipelines.consumption_news_pipeline.ConsumptionPipeline': 300,
 }
+
 
 FEED_EXPORT_ENCODING = "utf-8"
 TWISTED_REACTOR = "twisted.internet.asyncioreactor.AsyncioSelectorReactor"

@@ -124,11 +124,22 @@ datalake/
 
 ## Visualización con Streamlit
 
-Inicia el dashboard con:
 
 ```bash
+cd dashboard
 streamlit run dashboard.py
 ```
+
+Configuración con variables de entorno `.env`:
+
+```env
+DB_HOST=localhost
+DB_USER=postgres
+DB_PASSWORD=Root123$$
+DB_DATABASE=scraping_db
+```
+
+---
 
 ### Funcionalidades del Panel
 
@@ -144,43 +155,25 @@ streamlit run dashboard.py
 
 ## Estructura del proyecto
 
-```
 news_scraper/
-├── news_scraper/                      # Módulo principal del proyecto Scrapy
-│   ├── spiders/                       # Spiders para cada fuente de noticias
-│   │   ├── quotes_spider.py           # Spider de QuotesToScrape (referencia o demo)
-│   │   ├── npr_spider.py              # Spider para NPR
-│   │   ├── aljazeera_spider.py        # Spider para Al Jazeera
-│   │   └── nyt_spider.py              # Spider para The New York Times (RSS)
-│   ├── pipelines.py                   # Limpieza, validación y almacenamiento en JSONL/PostgreSQL
-│   ├── items.py                       # Definición de los campos (Scrapy Items)
-│   ├── settings.py                    # Configuración de Scrapy (USER_AGENT, DELAY, FEEDS, etc.)
-│   ├── middlewares.py                 # (Opcional) Middleware de Scrapy si se usara
-│   └── __init__.py                    # Inicializador del módulo Python
-│
-├── output/                            # Directorio de salida de datos procesados
-│   ├── articles_final.jsonl           # Artículos limpios en formato JSONL
-│   ├── articles_postgres.csv          # Exportación desde PostgreSQL
-│   ├── contar_articulos.py            # Script para contar artículos únicos por fuente
-│   ├── exportar_postgres_csv.py       # Script para exportar artículos desde PostgreSQL a CSV
-│   ├── exportar_resumen.py            # Script para generar resumen por fuente
-│   ├── limpiar_json.py                # Script para limpiar el JSONL de duplicados
-│   └── limpiar_postgres.py            # Script para borrar artículos en la tabla PostgreSQL
-│
-├── datalake/                          # Arquitectura del lago de datos
-│   ├── LANDING_ZONE/                  # Datos crudos exportados directamente desde Scrapy
-│   │   └── articles_raw.jsonl
-│   ├── REFINED_ZONE/                  # Datos limpios exportados de PostgreSQL
-│   │   └── articles_postgres.csv
-│   └── CONSUMPTION_ZONE/             # Datos agregados resumidos para visualización
-│       └── articles_summary.csv
-│
-├── dashboard.py                       # Dashboard interactivo desarrollado con Streamlit
-├── ejecutar_scrapers.bat              # Script por lotes para ejecutar los spiders automáticamente
-├── scrapy.cfg                         # Configuración general de Scrapy
-├── README.md                          # Documentación técnica del proyecto
-└── informe_final.pdf                  # Informe detallado del proyecto (versión académica)
-
+├── news_scraper/
+│   ├── spiders/
+│   ├── pipelines/
+│   │   ├── landing_news_pipeline.py
+│   │   ├── refined_news_pipeline.py
+│   │   └── consumption_news_pipeline.py
+│   ├── items.py
+│   └── settings.py
+├── datalake/
+│   ├── LANDING_ZONE/
+│   ├── REFINED_ZONE/
+│   └── CONSUMPTION_ZONE/
+├── dashboard/
+│   └── dashboard.py
+├── ejecutar_scrapers.bat
+├── requirements.txt
+├── README.md
+└── informe_final.pdf
 ```
 
 ---

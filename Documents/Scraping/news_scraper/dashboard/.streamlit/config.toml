@@ -1,0 +1,6 @@
+[theme]
+base="dark"
+
+[server]
+headless=false
+port=8501
